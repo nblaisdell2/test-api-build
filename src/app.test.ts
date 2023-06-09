@@ -18,4 +18,8 @@ describe("The Main API", () => {
         );
       });
   });
+
+  it("should return a 200", () => {
+    return request(app).get("/").expect(200)
+  })
 });
