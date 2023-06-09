@@ -22,4 +22,11 @@ describe("The Main API", () => {
   it("should return a 200", () => {
     return request(app).get("/").expect(200)
   })
+<<<<<<< HEAD
+=======
+
+  it("should return a 200 again", () => {
+    return request(app).get("/").expect(200)
+  })
+>>>>>>> 2bd916d4e1a5ba804fac2a1935bf50f977ef1a4a
 });
