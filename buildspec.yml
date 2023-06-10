@@ -10,6 +10,7 @@ phases:
       - echo "Building the Docker image..."
       - docker build -t $dockerContainerName:latest .
       - docker tag $dockerContainerName:latest $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
+      - jq
   post_build:
     commands:
       - echo "Pushing container to ECR..."
@@ -17,5 +18,5 @@ phases:
       # - echo "Creating new Lambda version..."
       # - aws lambda update-function-code --region $awsRegion --function-name $dockerContainerName --image-uri $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
       # - aws lambda publish-version --function-name $dockerContainerName
-      # - echo "Deploying new Lambda function version"
-      # - aws deploy create-deployment --application-name $dockerContainerName-deploy --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name $dockerContainerName-deploy-group --region $awsRegion --revision '{"revisionType": "AppSpecContent", "appSpecContent": {"content": "{version: 0, Resources: [{myLambdaFunction: {Type: 'AWS::Lambda::Function', Properties: {Name: $dockerContainerName, CurrentVersion: '$CURR_VERSION', TargetVersion: '$NEXT_VERSION', Alias: latest}}}]}"}}'"
+      - echo "Deploying new Lambda function version"
+      - "aws deploy create-deployment --application-name $dockerContainerName-deploy --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name $dockerContainerName-deploy-group --region $awsRegion --revision '{\"revisionType\": \"AppSpecContent\", \"appSpecContent\": {\"content\": \"{version: 0, Resources: [{myLambdaFunction: {Type: 'AWS::Lambda::Function', Properties: {Name: $dockerContainerName, CurrentVersion: '$CURR_VERSION', TargetVersion: '$NEXT_VERSION', Alias: latest}}}]}\"}}'"
