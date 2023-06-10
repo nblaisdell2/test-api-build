@@ -25,6 +25,13 @@ echo -ne "AWS API Gateway Description: "
 read awsAPIGatewayDesc
 
 
+# aws lambda create-function --function-name $awsLambdaName --package-type Image --code ImageUri=$awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest --role $awsLambdaExecRoleArn >/dev/null
+# echo "Sleeping..."
+# sleep 15
+# echo "Publishing new Lambda version..."
+# aws lambda publish-version --function-name $awsLambdaName --description "Initial Version"
+# echo "Creating alias for lambda..."
+# aws lambda create-alias --function-name $awsLambdaName --name latest --function-version 1 --description "Latest version"
 
 
 echo ===================================
@@ -48,6 +55,8 @@ else
   echo "  ECR Repository '$awsECRRepoName' already created..."
 fi
 
+
+
 # Build the Docker container and set it up (tag the container) 
 # to get ready to be uploaded to ECR. Then, push to ECR.
 echo ===================================
@@ -60,11 +69,7 @@ docker tag docker-image:test $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$doc
 echo "  Pushing container to ECR..."
 docker push $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
 
-# TODO:
-#  1. Create new version of lambda function
-#     - Get current version of lambda and update appspec.yml file in source code
-#     - The new version should use the newly pushed ECR container
-#  2. 
+
 
 echo ===================================
 echo CREATING LAMBDA FUNCTION
@@ -76,12 +81,14 @@ if [[ $lambdaCount -eq 0 ]]
 then
   echo "  Creating..."
   aws lambda create-function --function-name $awsLambdaName --package-type Image --code ImageUri=$awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest --role $awsLambdaExecRoleArn >/dev/null
+  sleep 15
+  aws lambda publish-version --function-name $awsLambdaName --description "Initial Version"
+  aws lambda create-alias --function-name $awsLambdaName --name latest --function-version 1 --description "Latest version"
 else
   echo "  Lambda Function '$awsLambdaName' already exists..."
 fi
 
-# # Update Lambda function
-# aws lambda update-function-code --region $awsRegion --function-name $awsLambdaName --image-uri $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
+
 
 echo ===================================
 echo CREATING API GATEWAY
@@ -111,12 +118,3 @@ echo -ne "New API URL: "
 echo https://$restApiID.execute-api.$awsRegion.amazonaws.com/dev
 
 rm aws.json
-
-# echo awsAccountID {$awsAccountID}
-# echo awsRegion {$awsRegion}
-# echo awsECRRepoName {$awsECRRepoName}
-# echo dockerContainerName {$dockerContainerName}
-# echo awsLambdaName {$awsLambdaName}
-# echo awsLambdaExecRoleArn {$awsLambdaExecRoleArn}
-# echo awsAPIGatewayName {$awsAPIGatewayName}
-# echo awsAPIGatewayDesc {$awsAPIGatewayDesc}

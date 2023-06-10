@@ -4,7 +4,7 @@ Resources:
   - myLambdaFunction:
       Type: AWS::Lambda::Function
       Properties:
-        Name: "hello-world"
+        Name: test-api
         CurrentVersion: "1"
         TargetVersion: "2"
-        Alias: "latest"
+        Alias: latest
