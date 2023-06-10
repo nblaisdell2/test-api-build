@@ -3,6 +3,10 @@
 
 name: Node.js CI
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   push:
     branches: [ "main" ]
@@ -18,10 +22,6 @@ jobs:
       matrix:
         node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    
-    permissions:
-      id-token: write
-      contents: read
     
     steps:
     - name: Checking out source code
