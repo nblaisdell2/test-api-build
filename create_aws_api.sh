@@ -60,6 +60,11 @@ docker tag docker-image:test $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$doc
 echo "  Pushing container to ECR..."
 docker push $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
 
+# TODO:
+#  1. Create new version of lambda function
+#     - Get current version of lambda and update appspec.yml file in source code
+#     - The new version should use the newly pushed ECR container
+#  2. 
 
 echo ===================================
 echo CREATING LAMBDA FUNCTION
