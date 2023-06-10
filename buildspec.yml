@@ -20,4 +20,4 @@ phases:
   deploy:
     commands:
       - echo "Deploying new Lambda function version"
-      - aws deploy create-deployment --application-name $dockerContainerName-deploy --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name $dockerContainerName-deploy-group --region $awsRegion --revision '{"revisionType": "AppSpecContent", "appSpecContent": {"content": "{version: 0, Resources: [{myLambdaFunction: {Type: 'AWS::Lambda::Function', Properties: {Name: $dockerContainerName, CurrentVersion: '$CURR_VERSION', TargetVersion: '$NEXT_VERSION', Alias: latest}}}]}"}}'"
+      # - aws deploy create-deployment --application-name $dockerContainerName-deploy --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name $dockerContainerName-deploy-group --region $awsRegion --revision '{"revisionType": "AppSpecContent", "appSpecContent": {"content": "{version: 0, Resources: [{myLambdaFunction: {Type: 'AWS::Lambda::Function', Properties: {Name: $dockerContainerName, CurrentVersion: '$CURR_VERSION', TargetVersion: '$NEXT_VERSION', Alias: latest}}}]}"}}'"
