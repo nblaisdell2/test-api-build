@@ -14,3 +14,6 @@ phases:
     commands:
       - echo "Pushing container to ECR..."
       - docker push $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
+      - echo "Creating new Lambda version..."
+      - aws lambda update-function-code --region $awsRegion --function-name $dockerContainerName --image-uri $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
+      - aws lambda publish-version --function-name $dockerContainerName
