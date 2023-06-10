@@ -30,6 +30,11 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::387815262971:role/github-actions-role
+        aws-region: us-east-1
     - name: Running AWS CodeBuild
       uses: aws-actions/aws-codebuild-run-build@v1.0.12
       with:
