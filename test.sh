@@ -43,7 +43,7 @@ echo ===================================
 echo "  Building container..."
 docker build -t $dockerContainerName:latest .
 echo "  Tagging container..."
-docker tag docker-image:test $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
+docker tag $dockerContainerName:latest $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
 echo "  Pushing container to ECR..."
 docker push $awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest
 
