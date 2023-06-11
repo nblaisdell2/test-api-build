@@ -25,13 +25,6 @@ echo -ne "AWS API Gateway Description: "
 read awsAPIGatewayDesc
 
 
-# aws lambda create-function --function-name $awsLambdaName --package-type Image --code ImageUri=$awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest --role $awsLambdaExecRoleArn >/dev/null
-# echo "Sleeping..."
-# sleep 15
-# echo "Publishing new Lambda version..."
-# aws lambda publish-version --function-name $awsLambdaName --description "Initial Version"
-# echo "Creating alias for lambda..."
-# aws lambda create-alias --function-name $awsLambdaName --name latest --function-version 1 --description "Latest version"
 
 
 echo ===================================
