@@ -51,7 +51,7 @@ then
   aws lambda create-function --function-name $awsLambdaName --package-type Image --code ImageUri=$awsAccountID.dkr.ecr.$awsRegion.amazonaws.com/$dockerContainerName:latest --role $awsLambdaExecRoleArn >/dev/null
   sleep 15
   initVersion=$(aws lambda publish-version --function-name $awsLambdaName --description "Initial Version" | jq -r .Version)
-  aws lambda create-alias --function-name $awsLambdaName --name latest --function-version $initVersion --description "Latest version"
+  aws lambda create-alias --function-name $awsLambdaName --name latest --function-version $initVersion --description "Latest version" >/dev/null
 
 
 
