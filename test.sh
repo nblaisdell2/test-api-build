@@ -7,6 +7,7 @@ dockerContainerName=$3
 awsLambdaName=$3
 awsLambdaExecRoleArn=$4
 awsAPIGatewayName=$3-API
+awsAPIGatewayDesc="$3-API Description"
 
 
 
