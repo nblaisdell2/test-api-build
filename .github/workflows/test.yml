@@ -35,7 +35,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - run: bash test.sh ${{ secrets.AWS_ACCOUNT_ID }}
+    - run: bash test.sh ${{ secrets.AWS_ACCOUNT_ID }} ${{ secrets.AWS_ACCOUNT_ID }} ${{ github.event.repository.name }} ${{ secrets.AWS_LAMBDA_EXEC_ARN }}
     # - name: Configure AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v2
     #   with:
